@@ -60,6 +60,10 @@ bot.on("messageCreate", async (message) => {
     case "play":
       Commands.play(message, server, args);
       break;
+    case "s":
+    case "skip":
+      Commands.skip(message, server, args);
+      break;
     case "clear":
       Commands.clear(message, server);
       break;

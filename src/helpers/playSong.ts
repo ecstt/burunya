@@ -12,11 +12,13 @@ export const playSong = async (message, server) => {
   const song = server.queue[0];
   const format = "251";
   //create audio player
-  server.player = createAudioPlayer({
-    behaviors: {
-      noSubscriber: NoSubscriberBehavior.Stop,
-    },
-  });
+  if (server.player == null) {
+    server.player = createAudioPlayer({
+      behaviors: {
+        noSubscriber: NoSubscriberBehavior.Stop,
+      },
+    });
+  }
   //subscribe audio player to connection
   server.connection.subscribe(server.player);
   if (song) {
@@ -30,8 +32,10 @@ export const playSong = async (message, server) => {
     }
     server.player.on(AudioPlayerStatus.Idle, () => {
       server.playing = false;
-      server.queue.shift();
-      playSong(message, server);
+      if (server.connection != null) {
+        server.queue.shift();
+        playSong(message, server);
+      }
     });
   }
 };
