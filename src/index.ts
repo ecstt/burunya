@@ -31,30 +31,35 @@ var servers = {};
 //MESSAGE_CATCH
 
 bot.on("messageCreate", async (message) => {
-  if (message.author.bot) return;
-  if (!message.content.startsWith(process.env.DISCORD_PREFIX)) return;
-  //if server doesn't have a queue add server to servers
-  //list with a new queue
   if (!servers[message.guild.id])
     servers[message.guild.id] = {
       queue: [],
       playing: false,
+      looping: false,
       connection: null,
       player: null,
+      prefix: process.env.DISCORD_PREFIX,
     };
   var server = servers[message.guild.id];
+  if (message.author.bot) return;
+  if (!message.content.startsWith(server.prefix)) return;
+  //if server doesn't have a queue add server to servers
+  //list with a new queue
 
   const [CMD_NAME, ...args] = message.content
     .trim()
-    .substring(process.env.DISCORD_PREFIX.length)
+    .substring(server.prefix.length)
     .split(/\s+/);
+  console.log(
+    `New message form: [${message.guildId}.${message.channelId}] - ${message.author.tag}: ${message.content}`
+  );
   switch (CMD_NAME) {
     case "h":
     case "help":
-      Commands.help(message, args);
+      Commands.help(message, server, args);
       break;
     case "prefix":
-      Commands.prefix(message, args);
+      Commands.prefix(message, server, args);
       break;
     case "p":
     case "play":
@@ -63,6 +68,10 @@ bot.on("messageCreate", async (message) => {
     case "s":
     case "skip":
       Commands.skip(message, server, args);
+      break;
+    case "q":
+    case "queue":
+      Commands.queue(message, server);
       break;
     case "clear":
       Commands.clear(message, server);

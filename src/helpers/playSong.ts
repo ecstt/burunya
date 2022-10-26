@@ -8,7 +8,7 @@ import {
   entersState,
 } from "@discordjs/voice";
 
-export const playSong = async (message, server) => {
+export const playSong = async (message, server, last?) => {
   const song = server.queue[0];
   const format = "251";
   //create audio player
@@ -22,9 +22,9 @@ export const playSong = async (message, server) => {
   //subscribe audio player to connection
   server.connection.subscribe(server.player);
   if (song) {
-    const stream = createAudioResource(ytdl(song.title, { quality: format }));
-    server.player.play(stream);
     try {
+      const stream = createAudioResource(ytdl(song.title, { quality: format }));
+      server.player.play(stream);
       await entersState(server.player, AudioPlayerStatus.Playing, 5_000);
       server.playing = true;
     } catch (err) {

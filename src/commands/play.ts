@@ -14,7 +14,7 @@ export const play = async (message, server, args?) => {
   //only link support
   if (!validURL(args[0])) return message.reply("Only supports YT links");
   const videoLink = args[0];
-  server.queue.push({ title: videoLink as String, isUrl: false });
+  server.queue.push({ title: videoLink as String, isUrl: true });
   const newSong = server.queue[server.queue.length - 1];
   //check if bot is already in the channel
   /* if (
