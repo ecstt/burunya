@@ -23,7 +23,15 @@ export const playSong = async (message, server, last?) => {
   server.connection.subscribe(server.player);
   if (song) {
     try {
-      const stream = createAudioResource(ytdl(song.title, { quality: format }));
+      const stream = createAudioResource(
+        ytdl(song.title, {
+          filter: "audioonly",
+          highWaterMark: 1 << 62,
+          liveBuffer: 1 << 62,
+          dlChunkSize: 0, //disabling chunking is recommended in discord bot
+          quality: "lowestaudio",
+        })
+      );
       server.player.play(stream);
       await entersState(server.player, AudioPlayerStatus.Playing, 5_000);
       server.playing = true;
