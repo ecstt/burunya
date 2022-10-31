@@ -36,6 +36,6 @@ export const search = async (message, server, args?) => {
       play(message, server, [uri]);
     })
     .catch((collected) => {
-      message.reply("Timed Out or Imput Error");
+      message.reply("Timed Out");
     });
 };
