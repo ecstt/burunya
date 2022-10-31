@@ -6,6 +6,7 @@ import {
   GatewayIntentBits,
   Collection,
   ClientVoiceManager,
+  ButtonComponent,
 } from "discord.js";
 
 const bot = new Client({
@@ -18,8 +19,6 @@ const bot = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
-
-var servers = {};
 //ON_READY
 
 bot.on("ready", () => {
@@ -27,6 +26,7 @@ bot.on("ready", () => {
 });
 
 var servers = {};
+var selectedVideo: Number = null;
 
 //MESSAGE_CATCH
 
@@ -42,6 +42,14 @@ bot.on("messageCreate", async (message) => {
     };
   var server = servers[message.guild.id];
   if (message.author.bot) return;
+  /* if (server.searchResult.length != 0) {
+    if (
+      (selectedVideo = parseInt(message.content.match(/[1-9]{1}[\d]{0,1}/)[0]))
+    ) {
+      console.log(selectedVideo);
+      server.searchResult = [];
+    }
+  } */
   if (!message.content.startsWith(server.prefix)) return;
   //if server doesn't have a queue add server to servers
   //list with a new queue
@@ -61,11 +69,14 @@ bot.on("messageCreate", async (message) => {
     case "prefix":
       Commands.prefix(message, server, args);
       break;
+    case "s":
+    case "search":
+      Commands.search(message, server, args);
+      break;
     case "p":
     case "play":
       Commands.play(message, server, args);
       break;
-    case "s":
     case "skip":
       Commands.skip(message, server, args);
       break;
