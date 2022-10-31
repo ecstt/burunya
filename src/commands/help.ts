@@ -12,7 +12,11 @@ export const help = (message, server, args?) => {
       },
       {
         name: "```" + `${server.prefix}play <link>` + "```",
-        value: "play song from yt link",
+        value: "play song from yt link (p)",
+      },
+      {
+        name: "```" + `${server.prefix}search <keywords>` + "```",
+        value: "search song on yt (s)",
       },
       {
         name: "```" + `${server.prefix}skip <n>` + "```",

@@ -59,7 +59,7 @@ bot.on("messageCreate", async (message) => {
     .substring(server.prefix.length)
     .split(/\s+/);
   console.log(
-    `New message form: [${message.guildId}.${message.channelId}] - ${message.author.tag}: ${message.content}`
+    `New message from: [${message.guildId}.${message.channelId}] - ${message.author.tag}: ${message.content}`
   );
   switch (CMD_NAME) {
     case "h":

@@ -14,12 +14,12 @@ export const search = async (message, server, args?) => {
   }
   const embed = new EmbedBuilder()
     .setColor(0x3393ff)
-    .setTitle("RESULTS")
+    .setTitle("CHOOSE TYPING THE NUMBER")
     .setDescription(response)
     .setTimestamp()
     .setFooter({ text: "Burunya" });
   await message.reply({ embeds: [embed] });
-  const filter = (m) => m.content.match(/[1-9]{1}[\d]{0,1}/)[0];
+  const filter = (m) => m.content.match(/[1-9]{1}[\d]{0,1}/) != null;
   const awaited = await message.channel
     .awaitMessages({
       filter,
@@ -34,5 +34,8 @@ export const search = async (message, server, args?) => {
         "https://www.youtube.com/watch?v=" + videos[selectedVideo - 1].id;
       console.log(uri);
       play(message, server, [uri]);
+    })
+    .catch((collected) => {
+      message.reply("Timed Out or Imput Error");
     });
 };
