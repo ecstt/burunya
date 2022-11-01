@@ -15,8 +15,12 @@ export const help = (message, server, args?) => {
         value: "play song from yt link (p)",
       },
       {
-        name: "```" + `${server.prefix}search <keywords>` + "```",
-        value: "search song on yt (s)",
+        name: "```" + `${server.prefix}pause` + "```",
+        value: "pause song",
+      },
+      {
+        name: "```" + `${server.prefix}resume` + "```",
+        value: "resume song",
       },
       {
         name: "```" + `${server.prefix}skip <n>` + "```",

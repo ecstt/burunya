@@ -77,6 +77,12 @@ bot.on("messageCreate", async (message) => {
     case "play":
       Commands.play(message, server, args);
       break;
+    case "pause":
+      Commands.pause(message, server, args);
+      break;
+    case "resume":
+      Commands.resume(message, server, args);
+      break;
     case "skip":
       Commands.skip(message, server, args);
       break;
