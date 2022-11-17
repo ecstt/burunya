@@ -7,6 +7,7 @@ import {
   Collection,
   ClientVoiceManager,
   ButtonComponent,
+  ContextMenuCommandAssertions,
 } from "discord.js";
 
 const bot = new Client({
@@ -98,6 +99,9 @@ bot.on("messageCreate", async (message) => {
     case "stop":
     case "quit":
       Commands.stop(message, server);
+      break;
+    case "ping":
+      Commands.ping(message);
       break;
   }
 });
